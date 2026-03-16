@@ -12,41 +12,53 @@ The skills produce **design artifacts** (architecture decision records, guardrai
 
 ## Installation
 
-### As a complete collection (recommended)
+### Clone with submodules
 
-Clone the repo and symlink the root skill into your project:
+Third-party skills (context engineering, Langfuse, Anthropic skill-creator) are included as git submodules under `vendor/`. Clone with `--recursive` to get everything:
 
 ```bash
-git clone https://github.com/[your-username]/agentic-systems-skills.git ~/skills/agentic-systems-skills
+git clone --recursive https://github.com/[your-username]/agentic-systems-skills.git ~/skills/agentic-systems-skills
+```
 
-# Symlink the collection into your project
+If you already cloned without `--recursive`:
+
+```bash
+cd ~/skills/agentic-systems-skills
+git submodule update --init --recursive
+```
+
+### Symlink into your project
+
+Symlink the collection into your project's `.claude/skills/` directory:
+
+```bash
+# The main collection
 ln -s ~/skills/agentic-systems-skills .claude/skills/agentic-systems
+
+# Third-party skills from vendor/
+ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/context-fundamentals .claude/skills/context-fundamentals
+ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/context-degradation .claude/skills/context-degradation
+ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/context-compression .claude/skills/context-compression
+ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/context-optimization .claude/skills/context-optimization
+ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/filesystem-context .claude/skills/filesystem-context
+ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/multi-agent-patterns .claude/skills/multi-agent-patterns
+ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/memory-systems .claude/skills/memory-systems
+ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/tool-design .claude/skills/tool-design
+ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/evaluation .claude/skills/evaluation
+ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/advanced-evaluation .claude/skills/advanced-evaluation
+ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/project-development .claude/skills/project-development
+ln -s ~/skills/agentic-systems-skills/vendor/langfuse-skills/skills/langfuse .claude/skills/langfuse
+ln -s ~/skills/agentic-systems-skills/vendor/anthropic-skills/skills/skill-creator .claude/skills/skill-creator
 ```
 
-Or symlink globally for all projects:
+Or symlink globally into `~/.claude/skills/` for use across all projects.
+
+### Updating third-party skills
 
 ```bash
-ln -s ~/skills/agentic-systems-skills ~/.claude/skills/agentic-systems
+cd ~/skills/agentic-systems-skills
+git submodule update --remote
 ```
-
-### Complementary third-party skills
-
-This collection is designed to work alongside these community and vendor skills. Install them for the complete framework:
-
-```bash
-# Context engineering (community)
-git clone https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering.git ~/skills/context-engineering
-
-# Langfuse (vendor)
-git clone https://github.com/langfuse/skills.git ~/skills/langfuse-skills
-
-# Anthropic skill-creator (vendor)
-git clone https://github.com/anthropics/skills.git ~/skills/anthropic-skills
-
-# Symlink individually into your project's .claude/skills/ or globally into ~/.claude/skills/
-```
-
-See the root `SKILL.md` for the full list of third-party skills and how they complement this collection.
 
 ## How to use
 
