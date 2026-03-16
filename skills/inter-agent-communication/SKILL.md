@@ -167,7 +167,7 @@ These patterns describe how messages flow through the system. The topology (from
 
 Fixed-stage handoffs. Each agent completes its work and passes to the next. Simple and predictable. Good for well-defined workflows where stages are known in advance.
 
-Communication design: each stage produces a structured output that the next stage consumes. Define the schema for each boundary using `with_structured_output(PydanticModel)` so the receiving stage gets guaranteed types, not free text to parse.
+Communication design: where one stage's output feeds another stage's logic, define the schema using `with_structured_output(PydanticModel)` so the receiving stage gets guaranteed types, not free text to parse. Final stages producing user-facing text (reports, summaries) don't need schemas.
 
 ### Hub-and-spoke (supervisor)
 
