@@ -161,6 +161,3 @@ The `vendor/` directory contains third-party skill libraries included via [git s
 | `vendor/langfuse-skills/` | [langfuse/skills](https://github.com/langfuse/skills) | Langfuse | See repo |
 | `vendor/anthropic-skills/` | [anthropics/skills](https://github.com/anthropics/skills) | Anthropic | See repo |
 
-## License
-
-[Add your license here]
