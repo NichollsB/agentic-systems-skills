@@ -54,6 +54,7 @@ Which models for which agent roles. The CLASSic evaluation framework (Cost, Late
 **`tool-design`** (community skill)
 Before building the graph, design the tools the agent will use. Tool descriptions are contracts that determine when tools are called and with what parameters. Covers consolidation (composite tools over atomic wrappers), description engineering, error handling that enables recovery, response format for token efficiency, and the eval-driven improvement loop. Invoke this skill to design your tool set.
 - Load `addendums/tool-design-anthropic-api.md` for Anthropic-specific features: strict mode, input_examples (72% to 90% accuracy), Tool Search Tool, programmatic tool calling
+- Load `addendums/structured-outputs.md` for enforcing typed schemas on tool parameters and node outputs (Anthropic and OpenAI)
 
 **`context-fundamentals`** (community skill)
 Understand and plan your context strategy before implementation. Covers attention mechanics, progressive disclosure, context budgeting, and the just-in-time vs pre-loaded tradeoff. Invoke this skill if the system handles long conversations, large documents, or many tools.
@@ -139,4 +140,4 @@ These are loaded by skills on demand — not upfront.
 
 **Quick-reference cards** (`references/`): `ref-mast-taxonomy.md`, `ref-litellm-routing.md`, `ref-prompt-caching.md`
 
-**Addendums** (`addendums/` — extend community skills with provider-specific content): `tool-design-anthropic-api.md`, `token-optimisation-anthropic.md`, `context-engineering-strategies.md`, `mcp-langgraph-patterns.md`, `skill-integration-patterns.md`
+**Addendums** (`addendums/` — extend community skills with provider-specific content): `tool-design-anthropic-api.md`, `token-optimisation-anthropic.md`, `context-engineering-strategies.md`, `mcp-langgraph-patterns.md`, `skill-integration-patterns.md`, `structured-outputs.md`
