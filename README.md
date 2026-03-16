@@ -12,35 +12,79 @@ The skills produce **design artifacts** (architecture decision records, guardrai
 
 ## Installation
 
-### Clone
+Clone the repo, then run the install script to create symbolic links in your project. Third-party skills are included via [git subtree](https://www.atlassian.com/git/tutorials/git-subtree) so a standard clone gets everything — no extra steps.
 
-Third-party skills are included in the repo under `vendor/` via [git subtree](https://www.atlassian.com/git/tutorials/git-subtree). No special clone flags needed — a standard clone gets everything:
+### 1. Clone the repo
 
 ```bash
 git clone https://github.com/[your-username]/agentic-systems-skills.git ~/skills/agentic-systems-skills
 ```
 
-### Symlink into your project
+### 2. Install into your project
 
-Symlink the collection and vendor skills into your project's `.claude/skills/` directory:
+#### Option A: Install script (recommended)
 
+The install script symlinks the root skill, all 13 sub-skills, and all vendor skills into your project's `.claude/skills/` directory — one command, 27 symlinks:
+
+**Linux / macOS:**
 ```bash
-# The main collection
-ln -s ~/skills/agentic-systems-skills .claude/skills/agentic-systems
+~/skills/agentic-systems-skills/install.sh /path/to/your/project
 
-# Context engineering skills (community — by Murat Can Koylan)
-for skill in context-fundamentals context-degradation context-compression context-optimization filesystem-context multi-agent-patterns memory-systems tool-design evaluation advanced-evaluation project-development; do
-  ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/$skill .claude/skills/$skill
-done
-
-# Langfuse skill (by Langfuse)
-ln -s ~/skills/agentic-systems-skills/vendor/langfuse-skills/skills/langfuse .claude/skills/langfuse
-
-# Anthropic skill-creator (by Anthropic)
-ln -s ~/skills/agentic-systems-skills/vendor/anthropic-skills/skills/skill-creator .claude/skills/skill-creator
+# Or install globally (available in all projects):
+~/skills/agentic-systems-skills/install.sh ~
 ```
 
-Or symlink globally into `~/.claude/skills/` for use across all projects.
+**Windows (PowerShell):**
+```powershell
+C:\path\to\agentic-systems-skills\install.ps1 -Target C:\path\to\your\project
+
+# Or install globally:
+C:\path\to\agentic-systems-skills\install.ps1 -Target $env:USERPROFILE
+```
+
+#### Option B: Symlink individual skills
+
+If you only need specific skills, symlink them manually. Each skill must be a direct child of `.claude/skills/`:
+
+**Linux / macOS:**
+```bash
+REPO=~/skills/agentic-systems-skills
+mkdir -p .claude/skills
+
+# The root collection skill (orchestrator/skill map)
+ln -s $REPO .claude/skills/agentic-systems
+
+# Individual sub-skills (pick what you need)
+ln -s $REPO/skills/agentic-architecture .claude/skills/agentic-architecture
+ln -s $REPO/skills/agent-debugging .claude/skills/agent-debugging
+# ...etc
+
+# Vendor skills
+ln -s $REPO/vendor/context-engineering/skills/context-fundamentals .claude/skills/context-fundamentals
+ln -s $REPO/vendor/langfuse-skills/skills/langfuse .claude/skills/langfuse
+ln -s $REPO/vendor/anthropic-skills/skills/skill-creator .claude/skills/skill-creator
+# ...etc
+```
+
+**Windows (PowerShell):**
+```powershell
+$repo = "C:\path\to\agentic-systems-skills"
+New-Item -ItemType Directory -Path ".claude\skills" -Force
+
+# The root collection skill
+New-Item -ItemType Junction -Path ".claude\skills\agentic-systems" -Target $repo
+
+# Individual sub-skills
+New-Item -ItemType Junction -Path ".claude\skills\agentic-architecture" -Target "$repo\skills\agentic-architecture"
+New-Item -ItemType Junction -Path ".claude\skills\agent-debugging" -Target "$repo\skills\agent-debugging"
+# ...etc
+
+# Vendor skills
+New-Item -ItemType Junction -Path ".claude\skills\context-fundamentals" -Target "$repo\vendor\context-engineering\skills\context-fundamentals"
+# ...etc
+```
+
+> **Note:** Windows uses junctions (`New-Item -ItemType Junction`) instead of symlinks. Junctions work without admin privileges and behave identically for this purpose.
 
 ### Updating vendor skills
 
