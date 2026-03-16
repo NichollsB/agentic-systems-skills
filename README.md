@@ -28,6 +28,7 @@ The install script symlinks the root skill, all 13 sub-skills, and all vendor sk
 
 **Linux / macOS:**
 ```bash
+# Install locally (in your project dir)
 ~/skills/agentic-systems-skills/install.sh /path/to/your/project
 
 # Or install globally (available in all projects):
@@ -36,6 +37,7 @@ The install script symlinks the root skill, all 13 sub-skills, and all vendor sk
 
 **Windows (PowerShell):**
 ```powershell
+# Install locally (in your project dir)
 C:\path\to\agentic-systems-skills\install.ps1 -Target C:\path\to\your\project
 
 # Or install globally:
