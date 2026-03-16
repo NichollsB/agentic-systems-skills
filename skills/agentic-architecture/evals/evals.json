@@ -1,0 +1,26 @@
+{
+  "skill_name": "agentic-architecture",
+  "evals": [
+    {
+      "id": 0,
+      "name": "email-classifier",
+      "prompt": "I'm building a customer support system for our SaaS product. Incoming emails need to be classified into categories (billing, technical, feature request, general) and then routed to the right team. Each category has a slightly different response template. We get about 2000 emails a day. How should I architect this?",
+      "expected_output": "Should recommend a workflow (not an agent), specifically the routing pattern. Should suggest starting without a framework. Should produce an ADR.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "research-assistant",
+      "prompt": "I want to build an AI research assistant that can take a research question, search across academic papers, web sources, and internal company docs, synthesize the findings, identify contradictions between sources, and produce a structured report with proper citations. The research questions are open-ended — sometimes it's 'what are the latest approaches to X' and sometimes it's 'compare approaches A, B, and C for our specific use case'. It needs to handle cases where initial searches don't find enough and it needs to reformulate and try again.",
+      "expected_output": "Should recommend an agent (not workflow) due to open-ended nature. Should consider multi-agent (orchestrator-worker or supervisor). Should recommend plan-and-execute or hybrid reasoning. Should recommend LangGraph for state management. Should produce an ADR.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "content-pipeline",
+      "prompt": "We're building a content generation pipeline for our marketing team. Writers submit briefs, the AI generates drafts, then a human editor reviews and either approves, requests changes, or rejects. If changes are requested, the AI revises based on the editor's notes and resubmits. We're trying to decide between LangGraph and CrewAI for this. What would you recommend?",
+      "expected_output": "Should NOT jump straight to framework comparison. Should identify this as a workflow (evaluator-optimizer pattern). Should recommend reflection as reasoning pattern. Should recommend LangGraph specifically because of human-in-the-loop interrupt/resume. Should question whether a framework is even needed. Should produce an ADR.",
+      "files": []
+    }
+  ]
+}

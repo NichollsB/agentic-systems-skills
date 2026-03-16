@@ -1,0 +1,51 @@
+{
+  "skill_name": "langgraph-fundamentals",
+  "evals": [
+    {
+      "id": 0,
+      "name": "rag-pipeline",
+      "prompt": "I need a LangGraph graph that takes a user question, retrieves relevant documents, generates an answer with citations, and validates the answer isn't hallucinating. If validation fails, it should retry with a reformulated query, max 3 attempts.",
+      "expected_output": "Core primitives only. State with routing fields (attempt count, validation result), nodes for retrieve/generate/validate/reformulate, conditional edge with loop guard, no subgraphs/parallelism/HITL/streaming.",
+      "files": [],
+      "expectations": [
+        "State schema uses TypedDict with total=False and includes routing fields for the retry loop",
+        "Nodes follow single-responsibility — separate retrieve, generate, validate, reformulate nodes",
+        "Includes a loop guard capping retries at 3 with documented behaviour at the limit",
+        "Routing function is pure (no LLM calls) and decides retry vs complete based on state",
+        "Does NOT include subgraphs, parallelism, HITL, or streaming — the task doesn't need them",
+        "Shows at least one test example for a node or routing function",
+        "Produces complete graph implementation — schema, nodes, wiring, not just fragments"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "research-full",
+      "prompt": "Build me a complete LangGraph implementation for a research assistant. It has an orchestrator that plans search queries, fans out to 3 parallel search workers (academic, web, internal docs), evaluates coverage, can reformulate and search again (max 3 rounds), then synthesizes a report. I need this to persist across sessions.",
+      "expected_output": "Full stack. State with operator.add reducer for parallel results, scatter-gather or static fan-out for workers, loop guard on reformulation, checkpointer selection for persistence.",
+      "files": [],
+      "expectations": [
+        "State schema includes a reducer (operator.add or similar) for collecting parallel search results",
+        "Implements parallel fan-out to search workers (Send API or static fan-out)",
+        "Includes a loop guard on the reformulation cycle capped at 3",
+        "Selects an appropriate checkpointer for session persistence (not MemorySaver)",
+        "Nodes follow single-responsibility",
+        "Produces complete graph implementation — schema, nodes, wiring, configuration"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "content-review",
+      "prompt": "I'm building a content generation graph in LangGraph. It generates a draft, then pauses for a human editor to review. The editor can approve, request changes (with notes), or reject. On revision, the AI rewrites based on the notes and pauses again. Cap at 3 revision rounds. I want to see token-by-token output as it generates.",
+      "expected_output": "HITL with interrupt(), streaming with messages mode, loop guard on revisions, checkpointer that supports persistence (not MemorySaver).",
+      "files": [],
+      "expectations": [
+        "Uses interrupt() for the human review pause point",
+        "Includes streaming configuration for token-by-token output (messages mode)",
+        "Includes a loop guard capping revisions at 3",
+        "Selects a persistent checkpointer (not MemorySaver) since review takes time",
+        "Routing handles three editor decisions: approve, request changes, reject",
+        "Produces complete graph implementation — schema, nodes, wiring, configuration"
+      ]
+    }
+  ]
+}
