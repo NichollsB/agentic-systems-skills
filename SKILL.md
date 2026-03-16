@@ -51,6 +51,14 @@ Which models for which agent roles. The CLASSic evaluation framework (Cost, Late
 ### Phase 2: Core Implementation
 **The patterns and structures that shape the system. These produce graph stubs and design patterns, not final code — but they define what the final code must look like.**
 
+**`tool-design`** (community skill)
+Before building the graph, design the tools the agent will use. Tool descriptions are contracts that determine when tools are called and with what parameters. Covers consolidation (composite tools over atomic wrappers), description engineering, error handling that enables recovery, response format for token efficiency, and the eval-driven improvement loop. Invoke this skill to design your tool set.
+- Load `addendums/tool-design-anthropic-api.md` for Anthropic-specific features: strict mode, input_examples (72% to 90% accuracy), Tool Search Tool, programmatic tool calling
+
+**`context-fundamentals`** (community skill)
+Understand and plan your context strategy before implementation. Covers attention mechanics, progressive disclosure, context budgeting, and the just-in-time vs pre-loaded tradeoff. Invoke this skill if the system handles long conversations, large documents, or many tools.
+- Load `addendums/context-engineering-strategies.md` for Anthropic's Write/Select/Compress/Isolate framework
+
 **`langgraph-fundamentals`**
 The complete LangGraph implementation: TypedDict state schemas, single-responsibility nodes, edges, routing functions, loop guards, subgraphs, parallelism (Send API), checkpointer wiring, streaming, and human-in-the-loop interrupts. Produces a complete graph.
 - Load `addendums/skill-integration-patterns.md` for the dual-use skill-as-node wrapper pattern
@@ -61,7 +69,7 @@ Self-correction patterns: basic reflection (generate-critique-revise), Reflexion
 
 **`inter-agent-communication`**
 Communication between agents: three tiers (shared state, tool-based handoffs, A2A protocol), the telephone game problem and the immutable original_request fix, HandoffContext contract, communication architecture patterns (pipeline, hub-and-spoke, swarm, scatter-gather), and failure modes. Produces a communication contract.
-- Complements the community `multi-agent-patterns` skill for topology background
+- Invoke `multi-agent-patterns` (community skill) for topology implementation detail
 
 ### Phase 3: Reliability and Data
 **Concerns that are expensive to retrofit. Address before production, not after the first incident.**
@@ -69,13 +77,13 @@ Communication between agents: three tiers (shared state, tool-based handoffs, A2
 **`guardrails-and-security`**
 Four-layer defence stack: pre-execution checks (circuit breakers), runtime anomaly detection, output guardrails, and human-in-the-loop escalation. Guardrail timing (async, partial streaming, synchronous). Trust tiers (Gold/Silver/Untrusted). Prompt injection defence (five layers). Memory hygiene. Produces a guardrail map.
 - Load `addendums/tool-design-anthropic-api.md` for strict mode and Tool Search Tool
-- Complements the community `tool-design` skill for general tool design patterns
 
 **`memory-and-persistence`**
 Checkpointer selection (MemorySaver, SqliteSaver, PostgresSaver, RedisSaver). PostgresSaver setup with connection pooling. Cross-thread memory via PostgresStore with namespaced keys. Load/save node patterns. Context rot and three-tier compaction (observation masking first, then LLM summarisation). Produces persistence configuration.
 - Load `references/decision-memory-tier.md` for memory type and compaction tier decision tables
 - Load `addendums/context-engineering-strategies.md` for Anthropic's Write/Select/Compress/Isolate framework
-- Complements the community `memory-systems` skill for backend selection (Mem0, Zep, Letta, Cognee)
+- Invoke `memory-systems` (community skill) if you need to select a memory backend (Mem0, Zep/Graphiti, Letta, Cognee) — this skill covers LangGraph persistence wiring, that skill covers backend selection
+- Invoke `context-optimization` (community skill) for observation masking, KV-cache optimisation, and context partitioning techniques
 
 ### Phase 4: Infrastructure and Operations
 **Configuration and scaffolding for the operational environment.**
@@ -86,14 +94,14 @@ LiteLLM proxy setup: four routing strategies (simple-shuffle recommended), YAML 
 
 **`project-setup`**
 Canonical folder structure for agentic projects. Dependency injection via model factory. Environment-aware configuration (dev/staging/prod). Testing strategy (this skill owns it): unit tests with mock LLMs, integration tests, skill evaluations, trajectory evaluations, non-determinism handling with pass@k. Deployment pipeline stages. Produces a project scaffold.
-- Complements the community `project-development` skill for task-model fit and pipeline methodology
+- Invoke `project-development` (community skill) for task-model fit analysis and pipeline methodology
 
 **`deployment-and-versioning`**
 The four change vectors that affect agent behaviour (code, model versions, skill/prompt versions, tool configurations). Three-environment strategy. Rollback procedures for each vector. State migration for schema changes (safe vs breaking). Statistical quality monitoring — quality score alerts and spend alerts from day one. Produces a versioning plan.
 
 **`langfuse-integration`**
 LangGraph-specific Langfuse setup: CallbackHandler integration, custom spans, TTFT tracking, sampling for production. Three evaluation contexts (observation-level, trace-level, experiment-level). The evaluation flywheel (trace -> dataset -> experiment -> deploy). Dataset creation from production failures. Prompt version management. Spend alerts. Produces observability configuration.
-- Complements the community `langfuse` skill for general CLI and API access
+- Invoke `langfuse` (community skill) for general Langfuse CLI and API access beyond LangGraph-specific patterns
 
 ### Phase 5: Maintenance and Advanced Patterns
 **For when things go wrong or the task outgrows a single session.**
@@ -101,7 +109,8 @@ LangGraph-specific Langfuse setup: CallbackHandler integration, custom spans, TT
 **`agent-debugging`**
 MAST failure taxonomy (14 modes across 3 categories from NeurIPS 2025). AgentErrorTaxonomy for single-agent failures (memory, reflection, planning, action). Symptom-to-cause diagnosis map. LangGraph time-travel debugging (inspect, replay, fork). Binary search isolation for long traces. Non-determinism debugging with pass@k. The failure-to-improvement flywheel. Produces a root cause diagnosis and regression test.
 - Load `references/ref-mast-taxonomy.md` for the full 14 failure modes quick-reference
-- Complements the community `evaluation` and `advanced-evaluation` skills for LLM-as-judge patterns
+- Invoke `evaluation` (community skill) for building LLM-as-judge rubrics and test frameworks
+- Invoke `advanced-evaluation` (community skill) for pairwise comparison, position bias mitigation, and confidence calibration
 
 **`agent-harness-design`**
 Long-horizon task harnesses for work that spans multiple sessions. The two-agent split: initializer agent (creates feature list JSON, progress log, init.sh, initial commit) and coding agent (one feature per session, end-to-end verification, clean-state rule). Progress artifacts as external memory. Generalises to non-software domains. Produces a harness scaffold.
