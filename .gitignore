@@ -7,6 +7,9 @@
 # Skill symlinks are machine-specific (setup documented in plan)
 .claude/skills/
 
+# Skill eval test cases (internal to build process, not part of the skill)
+skills/*/evals/
+
 # OS files
 Thumbs.db
 Desktop.ini

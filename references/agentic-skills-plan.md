@@ -196,7 +196,7 @@ Extends the community `context-optimization` skill with provider-specific mechan
 
 ## Skills to Build
 
-These 15 skills have no adequate equivalent in any existing resource. Each is designed to function independently.
+These 12 skills have no adequate equivalent in any existing resource. Each is designed to function independently.
 
 All skills should be built using `skill-creator` at `/mnt/skills/examples/skill-creator/`. Content input for each comes from the indicated sections of `agentic-systems-reference-guide.md`.
 
@@ -342,23 +342,9 @@ All skills should be built using `skill-creator` at `/mnt/skills/examples/skill-
 
 ---
 
-### Tier 5 — Integrations
+### ~~Tier 5 — Integrations~~ (removed)
 
----
-
-#### `mcp-integration`
-**Ref doc section:** 16
-
-**What it covers:**
-- `langchain-mcp-adapters`: converting MCP tools to LangChain-compatible tools for LangGraph
-- MCP vs. native tools decision: latency, versioning, security tradeoffs
-- Interceptor pattern: adding logging and validation between agent and MCP server
-- Code execution with MCP for context efficiency
-- Security considerations: tool annotations for open-world access and destructive operations
-
-**Complements:** `mcp-builder` Anthropic skill covers server-side; this skill covers client-side integration
-
-**Output:** A working MCP client integration in a LangGraph graph
+`mcp-integration` was dropped after evaluation showed 0% delta — Claude's base knowledge already covers MCP client integration, `langchain-mcp-adapters`, interceptors, code execution mode, and `search_tools` patterns. The ref doc section 16 content is redundant with Claude's training data. The `mcp-builder` Anthropic skill covers server-side MCP.
 
 ---
 
@@ -451,19 +437,9 @@ All skills should be built using `skill-creator` at `/mnt/skills/examples/skill-
 
 ---
 
-#### `agentic-skill-patterns`
-**Ref doc section:** 8
+#### ~~`agentic-skill-patterns`~~ (dropped — demoted to addendum)
 
-**What it covers:**
-- When to use a skill vs. inline prompt instructions vs. a tool
-- The dual-use wrapper pattern: a skill that is also invocable as a tool by an agent
-- Wiring skills into LangGraph flows: skill as a node, skill as a subgraph
-- SKILL.md body patterns for operational agent skills
-- Progressive disclosure for large skills: MODULE.md pattern
-
-**Excludes:** Skill authoring process — that belongs in `skill-creator`
-
-**Output:** A decision on skill vs. inline prompt for each capability, with wiring code where skills are chosen
+Evaluation showed 0% delta across 6 test cases (including harder practical tests). Claude's base knowledge of AgentSkills.io, SKILL.md format, progressive disclosure, and script bundling is already sufficient. The unique content (skill vs tool decision framework, dual-use LangGraph wrapper, state assumption constraint) is preserved in `addendums/skill-integration-patterns.md`.
 
 ---
 
@@ -518,9 +494,9 @@ Short standalone documents extracted or derived from the ref doc. Not skills —
 4. **`inter-agent-communication`** — builds on architecture decisions
 5. **`reflection-and-validation`** — self-contained, build when needed
 6. **`model-selection`** + **`litellm-configuration`** — infrastructure foundation
-7. **`mcp-integration`** + **`project-setup`** + **`deployment-and-versioning`** — operational layer
+7. **`project-setup`** + **`deployment-and-versioning`** — operational layer
 8. **`langfuse-integration`** — observability (after project-setup establishes the testing strategy it references)
-9. **`agent-debugging`** + **`agentic-skill-patterns`** + **`agent-harness-design`** — quality and advanced patterns
+9. **`agent-debugging`** + **`agent-harness-design`** — quality and advanced patterns
 9. Decision tables, addendum docs, and quick-reference cards — extract and format last
 
 ---
@@ -532,7 +508,7 @@ Short standalone documents extracted or derived from the ref doc. Not skills —
 | Anthropic official skills | 2 | Already at `/mnt/skills/examples/` |
 | Langfuse official skills | 3 | `git clone langfuse/skills` → symlink globally |
 | Community context engineering skills | 11 relevant of 13 | `git clone muratcankoylan/Agent-Skills-for-Context-Engineering` → symlink globally |
-| Skills to build | 15 | Build using `skill-creator` |
+| Skills to build | 14 | Build using `skill-creator` |
 | Addendum docs | 3 | Short markdown, sit alongside community skills |
 | Decision tables | 4 | Extract from ref doc |
 | Quick-reference cards | 3 | Write new |

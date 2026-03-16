@@ -167,3 +167,8 @@ Present the decisions as a clean Architecture Decision Record. Each decision get
 ```
 
 Ask the user if the decisions look right before considering this complete.
+
+**Supporting reference docs** (load if needed for deeper detail on a specific decision):
+- `references/decision-workflows-vs-agents.md` — detailed workflow vs agent criteria
+- `references/decision-multi-agent-topology.md` — topology comparison with token overhead
+- `references/decision-framework-selection.md` — framework comparison with limitations

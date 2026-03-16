@@ -75,6 +75,7 @@ Each node does **exactly one thing**. If describing what a node does requires "a
 | **Tool execution** | Reads tool call from state, executes, writes result |
 | **Validation** | Reads output, scores it, writes confidence/errors |
 | **Load/save** | Reads from or writes to external memory at graph entry/exit |
+| **Skill node** | Loads a SKILL.md as system message, calls LLM with it. See `addendums/skill-integration-patterns.md` for the dual-use wrapper pattern |
 
 ### Testability check
 
@@ -184,7 +185,7 @@ Quick reference for which checkpointer to use:
 
 **If the graph uses `interrupt()`, do not use `MemorySaver`** — human review can take hours or days, and `MemorySaver` loses state on restart.
 
-For detailed checkpointer selection, setup, connection pooling, and cross-thread memory, see the `memory-and-persistence` skill.
+For detailed checkpointer selection, setup, connection pooling, and cross-thread memory, see the `memory-and-persistence` skill. For MCP tool integration patterns, see `addendums/mcp-langgraph-patterns.md`.
 
 ### Streaming
 
