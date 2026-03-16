@@ -66,7 +66,7 @@ Each node does **exactly one thing**. If describing what a node does requires "a
 - **Never mutate** the incoming state object
 - Accept dependencies via **injection** (model factories, config) — not hardcoded
 - Routing functions are **pure functions on state** — no LLM calls, no side effects
-- Use **structured outputs** (`with_structured_output()`) for nodes that produce typed data — see `addendums/structured-outputs.md` for provider-specific implementation
+- Use **structured outputs** for nodes that produce typed data — `llm.with_structured_output(PydanticModel)` guarantees schema conformance. Use `strict: True` on tool definitions to validate parameters.
 
 ### Common node patterns
 

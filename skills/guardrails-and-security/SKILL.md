@@ -136,7 +136,7 @@ Prompt injection is the primary attack vector. Five defence layers:
 
 1. **Input sanitisation** — strip or escape model-control tokens before they enter prompts
 2. **Structured prompts** — use XML tags to delineate user content from system instructions
-3. **Output schema enforcement** — structured outputs constrain what the model can express
+3. **Output schema enforcement** — use `strict: True` on tool definitions and `with_structured_output()` on LLM calls to guarantee schema conformance, preventing the model from producing unexpected shapes
 4. **Pre-tool argument validation** — injected instructions produce malformed args that checks catch
 5. **Restricted field flow** — allow/deny lists for which state fields can flow into prompts
 

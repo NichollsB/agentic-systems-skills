@@ -84,6 +84,7 @@ Validation nodes are first-class graph citizens. A dedicated validate_node runs 
 - Programmatic checks are instant and free
 - LLM checks are expensive and slow
 - Never combine both in the generator node
+- Use `with_structured_output(PydanticModel)` on the generator so its output is schema-valid before validation even runs — this eliminates an entire class of structural errors for free
 
 ### Validation node structure
 
