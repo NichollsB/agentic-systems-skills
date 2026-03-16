@@ -12,52 +12,45 @@ The skills produce **design artifacts** (architecture decision records, guardrai
 
 ## Installation
 
-### Clone with submodules
+### Clone
 
-Third-party skills (context engineering, Langfuse, Anthropic skill-creator) are included as git submodules under `vendor/`. Clone with `--recursive` to get everything:
-
-```bash
-git clone --recursive https://github.com/[your-username]/agentic-systems-skills.git ~/skills/agentic-systems-skills
-```
-
-If you already cloned without `--recursive`:
+Third-party skills are included in the repo under `vendor/` via [git subtree](https://www.atlassian.com/git/tutorials/git-subtree). No special clone flags needed — a standard clone gets everything:
 
 ```bash
-cd ~/skills/agentic-systems-skills
-git submodule update --init --recursive
+git clone https://github.com/[your-username]/agentic-systems-skills.git ~/skills/agentic-systems-skills
 ```
 
 ### Symlink into your project
 
-Symlink the collection into your project's `.claude/skills/` directory:
+Symlink the collection and vendor skills into your project's `.claude/skills/` directory:
 
 ```bash
 # The main collection
 ln -s ~/skills/agentic-systems-skills .claude/skills/agentic-systems
 
-# Third-party skills from vendor/
-ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/context-fundamentals .claude/skills/context-fundamentals
-ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/context-degradation .claude/skills/context-degradation
-ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/context-compression .claude/skills/context-compression
-ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/context-optimization .claude/skills/context-optimization
-ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/filesystem-context .claude/skills/filesystem-context
-ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/multi-agent-patterns .claude/skills/multi-agent-patterns
-ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/memory-systems .claude/skills/memory-systems
-ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/tool-design .claude/skills/tool-design
-ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/evaluation .claude/skills/evaluation
-ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/advanced-evaluation .claude/skills/advanced-evaluation
-ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/project-development .claude/skills/project-development
+# Context engineering skills (community — by Murat Can Koylan)
+for skill in context-fundamentals context-degradation context-compression context-optimization filesystem-context multi-agent-patterns memory-systems tool-design evaluation advanced-evaluation project-development; do
+  ln -s ~/skills/agentic-systems-skills/vendor/context-engineering/skills/$skill .claude/skills/$skill
+done
+
+# Langfuse skill (by Langfuse)
 ln -s ~/skills/agentic-systems-skills/vendor/langfuse-skills/skills/langfuse .claude/skills/langfuse
+
+# Anthropic skill-creator (by Anthropic)
 ln -s ~/skills/agentic-systems-skills/vendor/anthropic-skills/skills/skill-creator .claude/skills/skill-creator
 ```
 
 Or symlink globally into `~/.claude/skills/` for use across all projects.
 
-### Updating third-party skills
+### Updating vendor skills
+
+The vendor skills are included as git subtrees. To pull the latest from upstream:
 
 ```bash
 cd ~/skills/agentic-systems-skills
-git submodule update --remote
+git subtree pull --prefix vendor/context-engineering https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering.git main --squash
+git subtree pull --prefix vendor/langfuse-skills https://github.com/langfuse/skills.git main --squash
+git subtree pull --prefix vendor/anthropic-skills https://github.com/anthropics/skills.git main --squash
 ```
 
 ## How to use
@@ -157,6 +150,16 @@ The skills are derived from `references/agentic-systems-reference-guide.md`, whi
 - LiteLLM production documentation
 - Langfuse documentation
 - AgentSkills.io specification
+
+## Vendor skills (third-party)
+
+The `vendor/` directory contains third-party skill libraries included via [git subtree](https://www.atlassian.com/git/tutorials/git-subtree). These are not our work — they are maintained by their respective authors and included here for convenience so the complete framework works out of the box.
+
+| Directory | Source | Author | License |
+|-----------|--------|--------|---------|
+| `vendor/context-engineering/` | [Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) | Murat Can Koylan | See repo |
+| `vendor/langfuse-skills/` | [langfuse/skills](https://github.com/langfuse/skills) | Langfuse | See repo |
+| `vendor/anthropic-skills/` | [anthropics/skills](https://github.com/anthropics/skills) | Anthropic | See repo |
 
 ## License
 
